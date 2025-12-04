@@ -1,8 +1,4 @@
-I couldn’t find any public repository on GitHub under the user Gunavardhan22 named “cupup” — no matching results or references appear.
 
-Here’s a README template you **could use** if you create a `"cupup"` project, or if you share more info I can tailor it to your project’s details.
-
----
 
 # CupUp
 
