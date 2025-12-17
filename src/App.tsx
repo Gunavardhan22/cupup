@@ -1,19 +1,22 @@
 import { useEffect, useState } from 'react';
 import { supabase, Coffee } from './lib/supabase';
+import { CartProvider, useCart } from './context/CartContext';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import FilterBar from './components/FilterBar';
 import CoffeeCard from './components/CoffeeCard';
 import Footer from './components/Footer';
+import Checkout from './components/Checkout';
 import { Loader2 } from 'lucide-react';
 
-function App() {
+function AppContent() {
   const [coffees, setCoffees] = useState<Coffee[]>([]);
   const [filteredCoffees, setFilteredCoffees] = useState<Coffee[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [loading, setLoading] = useState(true);
-  const [cartCount, setCartCount] = useState(0);
+  const [showCheckout, setShowCheckout] = useState(false);
+  const { addToCart, getTotalItems } = useCart();
 
   useEffect(() => {
     fetchCoffees();
@@ -51,14 +54,13 @@ function App() {
     }
   }
 
-  function handleAddToCart(coffee: Coffee) {
-    setCartCount(prev => prev + 1);
-    console.log('Added to cart:', coffee.name);
+  if (showCheckout) {
+    return <Checkout onBack={() => setShowCheckout(false)} />;
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-amber-50">
-      <Header cartCount={cartCount} />
+      <Header cartCount={getTotalItems()} onCartClick={() => setShowCheckout(true)} />
       <Hero />
 
       <main className="container mx-auto px-4 py-12">
@@ -88,7 +90,7 @@ function App() {
                 <CoffeeCard
                   key={coffee.id}
                   coffee={coffee}
-                  onAddToCart={handleAddToCart}
+                  onAddToCart={addToCart}
                 />
               ))}
             </div>
@@ -104,6 +106,14 @@ function App() {
 
       <Footer />
     </div>
+  );
+}
+
+function App() {
+  return (
+    <CartProvider>
+      <AppContent />
+    </CartProvider>
   );
 }
 
