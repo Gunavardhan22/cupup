@@ -16,3 +16,36 @@ export interface Coffee {
   popular: boolean;
   created_at: string;
 }
+
+export interface Matcha {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image_url: string;
+  category: string;
+  rating: number;
+  popular: boolean;
+  created_at: string;
+}
+
+export interface Dessert {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image_url: string;
+  category: string;
+  rating: number;
+  popular: boolean;
+  created_at: string;
+}
+
+export interface AddOn {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  type: string;
+  created_at: string;
+}
